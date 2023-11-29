@@ -1,8 +1,10 @@
 #include <array>
 #include <cmath>
 #include <SFML/Graphics.hpp>
+#include <iostream>
 
 #include "Global.hpp"
+#include "Bullet.hpp"
 #include "Tank.hpp"
 #include "MapCollision.hpp"
 
@@ -27,10 +29,15 @@ void Tank::draw(sf::RenderWindow& window) {
 
 	sf::Texture texture;
 
-	texture.loadFromFile("tanchik.png");
+    if (!texture.loadFromFile("test2.png"))
+    {
+        std::cerr << "failed to load image" << std::endl;
+        exit(1);
+    }
 
 	sprite.setTexture(texture);
-	sprite.setTextureRect(sf::IntRect(CELL_SIZE, CELL_SIZE, CELL_SIZE*0.8, CELL_SIZE*0.8));
+    sprite.setTextureRect(sf::IntRect(0, (CELL_SIZE * direction), CELL_SIZE, CELL_SIZE));
+
 
 	window.draw(sprite);
 }
@@ -54,12 +61,11 @@ void Tank::set_position(short i_x, short i_y)
 
 void Tank::update(std::array<std::array<Cell, MAP_HEIGHT>, MAP_WIDTH>& i_map)
 {
-    std::array<bool, 5> walls{};
+    std::array<bool, 4> walls{};
     walls[0] = map_collision(TANK_SPEED + position.x, position.y, i_map);
     walls[1] = map_collision(position.x, position.y - TANK_SPEED, i_map);
     walls[2] = map_collision(position.x - TANK_SPEED, position.y, i_map);
     walls[3] = map_collision(position.x, TANK_SPEED + position.y, i_map);
-    walls[4] = map_collision(position.x, position.y, i_map);
 
     if (1 == sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
     {
@@ -120,7 +126,6 @@ void Tank::update(std::array<std::array<Cell, MAP_HEIGHT>, MAP_WIDTH>& i_map)
             position.y += TANK_SPEED;
         }
         }
-        direction = 4;
     }
 
     if (-CELL_SIZE >= position.x)
@@ -131,10 +136,22 @@ void Tank::update(std::array<std::array<Cell, MAP_HEIGHT>, MAP_WIDTH>& i_map)
     {
         position.x = TANK_SPEED - CELL_SIZE;
     }
+    std::cerr << position.x << "----" << position.y << "\n";
 }
 
 
 Position Tank::get_position()
 {
 	return position;
+}
+
+Bullet Tank::get_bullet()
+{
+    return bullet;
+}
+
+void Tank::launch() {
+    bullet.set_direction(direction);
+    bullet.set_active(true);
+    bullet.set_position(position.x, position.y);
 }

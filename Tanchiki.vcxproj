@@ -131,6 +131,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="ConvertSketch.cpp" />
     <ClCompile Include="DrawMap.cpp" />
     <ClCompile Include="main.cpp" />
@@ -151,6 +152,7 @@
     <None Include="sfml-window-d-2.dll" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Bullet.hpp" />
     <ClInclude Include="ConvertSketch.hpp" />
     <ClInclude Include="DrawMap.hpp" />
     <ClInclude Include="Global.hpp" />
@@ -158,8 +160,13 @@
     <ClInclude Include="Tank.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="..\..\..\Downloads\Map.png" />
-    <Image Include="..\..\..\Downloads\tanchik.png" />
+    <Image Include="Map.png" />
+    <Image Include="MapWall8.png" />
+    <Image Include="projectile.png" />
+    <Image Include="sfml-icon-small.png" />
+    <Image Include="tanchik.png" />
+    <Image Include="test.png" />
+    <Image Include="test2.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

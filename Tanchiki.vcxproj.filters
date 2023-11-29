@@ -30,6 +30,9 @@
     <ClCompile Include="DrawMap.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="Bullet.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="openal32.dll" />
@@ -60,12 +63,30 @@
     <ClInclude Include="DrawMap.hpp">
       <Filter>Исходные файлы\Файлы заголовков</Filter>
     </ClInclude>
+    <ClInclude Include="Bullet.hpp">
+      <Filter>Исходные файлы\Файлы заголовков</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="..\..\..\Downloads\tanchik.png">
+    <Image Include="tanchik.png">
       <Filter>Файлы ресурсов</Filter>
     </Image>
-    <Image Include="..\..\..\Downloads\Map.png">
+    <Image Include="sfml-icon-small.png">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="Map.png">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="MapWall8.png">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="test.png">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="projectile.png">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="test2.png">
       <Filter>Файлы ресурсов</Filter>
     </Image>
   </ItemGroup>
