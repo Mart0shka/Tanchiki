@@ -13,6 +13,7 @@ private:
 	bool stop;
 
 
+	
 
 public:
 	Bullet bullet;

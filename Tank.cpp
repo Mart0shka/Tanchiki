@@ -12,7 +12,7 @@ Tank::Tank() :
     dead(0),
     direction(0),
     position({ 0,0 }),
-    stop(1) {}
+    stop(1){}
 
 bool Tank::get_dead() {
     return dead;
