@@ -12,7 +12,7 @@ Tank::Tank() :
     dead(0),
     direction(0),
     position({ 0,0 }),
-    stop(1) {}
+    stop(1){}
 
 bool Tank::get_dead() {
 	return dead;
@@ -74,6 +74,12 @@ void Tank::update(std::array<std::array<Cell, MAP_HEIGHT>, MAP_WIDTH>& i_map, fl
     walls[1] = map_collision(position.x, position.y - TANK_SPEED*dt, i_map);
     walls[2] = map_collision(position.x - TANK_SPEED*dt, position.y, i_map);
     walls[3] = map_collision(position.x, TANK_SPEED*dt + position.y, i_map);
+
+    if (1 == sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
+        
+            get_bullet();
+        
+    }
 
     if (1 == sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
     {
@@ -149,6 +155,8 @@ void Tank::update(std::array<std::array<Cell, MAP_HEIGHT>, MAP_WIDTH>& i_map, fl
     {
         position.x = TANK_SPEED*dt - CELL_SIZE;
     }
+
+    
     std::cerr << position.x << "----" << position.y << "\n";
 }
 
@@ -160,6 +168,13 @@ Position Tank::get_position()
 
 Bullet Tank::get_bullet()
 {
+    
+
+
+    bullet.direction = direction;
+    bullet.active = 1;
+    bullet.position = position;
+
     return bullet;
 }
 

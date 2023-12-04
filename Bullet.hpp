@@ -1,7 +1,7 @@
 #pragma once
 
 class Bullet {
-private:
+public:
 
 	bool active;
 
@@ -9,7 +9,8 @@ private:
 
 	Position position;
 
-public:
+	sf::Time time;
+
 	Bullet();
 
 	bool get_active();
@@ -21,7 +22,8 @@ public:
 	void set_direction(unsigned char tank_direction);
 	void set_active(bool active);
 	void set_position(short x, short y);
-	void update(std::array<std::array<Cell, MAP_HEIGHT>, MAP_WIDTH>& map);
+	void update(std::array<std::array<Cell, MAP_HEIGHT>, MAP_WIDTH>& map, float);
 
 	Position get_position();
+
 };

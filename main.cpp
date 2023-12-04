@@ -3,6 +3,7 @@
 #include <chrono>
 #include <ctime>
 #include <iostream>
+#include<vector>
 
 #include "Global.hpp"
 #include "ConvertSketch.hpp"
@@ -114,7 +115,8 @@ int main()
 		draw_map(map, window);
 		tank.update(map, dtAsMSec);
 		tank.draw(window);
-		tank.get_bullet().draw(window);
+		tank.bullet.update(map, dtAsMSec);
+		tank.bullet.draw(window);
 	
         window.display();
     }
