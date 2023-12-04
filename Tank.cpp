@@ -9,12 +9,17 @@
 #include "MapCollision.hpp"
 
 Tank::Tank() :
-	dead(0),
-	direction(0),
-	position({ 0,0 }) {}
+    dead(0),
+    direction(0),
+    position({ 0,0 }),
+    stop(1) {}
 
 bool Tank::get_dead() {
 	return dead;
+}
+
+bool Tank::get_stop() {
+    return stop;
 }
 
 unsigned char Tank::get_direction(){
@@ -42,9 +47,11 @@ void Tank::draw(sf::RenderWindow& window) {
 	window.draw(sprite);
 }
 
-void Tank::reset() {
-	dead = 0;
-	direction = 0;
+
+void Tank::set_stop(bool i_stop)
+{
+    stop = i_stop;
+
 }
 
 
@@ -59,6 +66,7 @@ void Tank::set_position(short i_x, short i_y)
 	position = { i_x, i_y };
 }
 
+
 void Tank::update(std::array<std::array<Cell, MAP_HEIGHT>, MAP_WIDTH>& i_map)
 {
     std::array<bool, 4> walls{};
@@ -72,34 +80,39 @@ void Tank::update(std::array<std::array<Cell, MAP_HEIGHT>, MAP_WIDTH>& i_map)
         if (0 == walls[0]) //You can't turn in this direction if there's a wall there.
         {
             direction = 0;
+            stop = 0;
         }
     }
 
-    if (1 == sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+    else if (1 == sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
     {
         if (0 == walls[1])
         {
             direction = 1;
+            stop = 0;
         }
     }
 
-    if (1 == sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+    else if (1 == sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
     {
         if (0 == walls[2])
         {
             direction = 2;
+            stop = 0;
         }
     }
 
-    if (1 == sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+    else if (1 == sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
     {
         if (0 == walls[3])
         {
             direction = 3;
+            stop = 0;
         }
     }
+    else { stop = 1; }
 
-    if (0 == walls[direction])
+    if (0 == walls[direction] and stop == 0)
     {
         switch (direction)
         {

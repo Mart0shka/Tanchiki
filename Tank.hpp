@@ -10,18 +10,21 @@ private:
 
 	Position position;
 
+	bool stop;
+
 	Bullet bullet;
 
 public:
 	Tank();
 	
+	bool get_stop();
 	bool get_dead();
 	Bullet get_bullet();
 
 	unsigned char get_direction();
 
 	void draw(sf::RenderWindow& window);
-	void reset();
+	void set_stop(bool i_stop);
 	void set_dead(bool dead);
 	void set_position(short x, short y);
 	void update(std::array<std::array<Cell, MAP_HEIGHT>, MAP_WIDTH>& map);
