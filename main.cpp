@@ -3,6 +3,7 @@
 #include <chrono>
 #include <ctime>
 #include <iostream>
+#include<vector>
 
 #include "Global.hpp"
 #include "ConvertSketch.hpp"
@@ -13,6 +14,7 @@
 
 int main()
 {
+	bool can_launch = true;
 
 	sf::Clock clock;
 
@@ -85,7 +87,8 @@ int main()
 	//Get the current time and store it in a variable.
 
 	sf::Time dt = clock.restart();
-    while (window.isOpen()){
+	float reload = 0;
+	while (window.isOpen()) {
 		dt = clock.getElapsedTime();
 		float dtAsMSec = dt.asMilliseconds();
 		if (dtAsMSec > 15) {
@@ -107,17 +110,29 @@ int main()
 			}
 		}
 
-		if (1 == sf::Keyboard::isKeyPressed(sf::Keyboard::BackSpace)) {
+
+		if (1 == sf::Keyboard::isKeyPressed(sf::Keyboard::BackSpace) and can_launch) {
 			tank.launch();
+			reload = 0;
+			can_launch = false;
 		}
+		reload += dtAsMSec/1000;
+		if (reload > 2000000) {
+			can_launch = true;
+		}
+
 		window.clear();
 		draw_map(map, window);
 		tank.update(map, dtAsMSec);
 		tank.draw(window);
-		tank.get_bullet().draw(window);
-	
-        window.display();
-    }
+		tank.bullet.update(map, dtAsMSec);
+		tank.bullet.draw(window);
 
-    return 0;
+		window.display();
+	}
+
+	return 0;
 }
+
+
+

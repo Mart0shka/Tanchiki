@@ -15,24 +15,24 @@ Tank::Tank() :
     stop(1) {}
 
 bool Tank::get_dead() {
-	return dead;
+    return dead;
 }
 
 bool Tank::get_stop() {
     return stop;
 }
 
-unsigned char Tank::get_direction(){
-	return direction;
+unsigned char Tank::get_direction() {
+    return direction;
 }
 
 void Tank::draw(sf::RenderWindow& window) {
-	sf::Sprite sprite;
+    sf::Sprite sprite;
 
 
-	sprite.setPosition(position.x, position.y);
+    sprite.setPosition(position.x, position.y);
 
-	sf::Texture texture;
+    sf::Texture texture;
 
     if (!texture.loadFromFile("test2.png"))
     {
@@ -40,11 +40,11 @@ void Tank::draw(sf::RenderWindow& window) {
         exit(1);
     }
 
-	sprite.setTexture(texture);
+    sprite.setTexture(texture);
     sprite.setTextureRect(sf::IntRect(0, (CELL_SIZE * direction), CELL_SIZE, CELL_SIZE));
 
 
-	window.draw(sprite);
+    window.draw(sprite);
 }
 
 
@@ -57,23 +57,29 @@ void Tank::set_stop(bool i_stop)
 
 void Tank::set_dead(bool i_dead)
 {
-	dead = i_dead;
+    dead = i_dead;
 
 }
 
 void Tank::set_position(short i_x, short i_y)
 {
-	position = { i_x, i_y };
+    position = { i_x, i_y };
 }
 
 
 void Tank::update(std::array<std::array<Cell, MAP_HEIGHT>, MAP_WIDTH>& i_map, float dt)
 {
     std::array<bool, 4> walls{};
-    walls[0] = map_collision(TANK_SPEED*dt + position.x, position.y, i_map);
-    walls[1] = map_collision(position.x, position.y - TANK_SPEED*dt, i_map);
-    walls[2] = map_collision(position.x - TANK_SPEED*dt, position.y, i_map);
-    walls[3] = map_collision(position.x, TANK_SPEED*dt + position.y, i_map);
+    walls[0] = map_collision(TANK_SPEED * dt + position.x, position.y, i_map);
+    walls[1] = map_collision(position.x, position.y - TANK_SPEED * dt, i_map);
+    walls[2] = map_collision(position.x - TANK_SPEED * dt, position.y, i_map);
+    walls[3] = map_collision(position.x, TANK_SPEED * dt + position.y, i_map);
+
+    if (1 == sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
+
+        get_bullet();
+
+    }
 
     if (1 == sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
     {
@@ -118,7 +124,7 @@ void Tank::update(std::array<std::array<Cell, MAP_HEIGHT>, MAP_WIDTH>& i_map, fl
         {
         case 0:
         {
-            position.x += TANK_SPEED * dt*2;
+            position.x += TANK_SPEED * dt * 2;
 
             break;
         }
@@ -136,30 +142,39 @@ void Tank::update(std::array<std::array<Cell, MAP_HEIGHT>, MAP_WIDTH>& i_map, fl
         }
         case 3:
         {
-            position.y += TANK_SPEED * dt*2;
+            position.y += TANK_SPEED * dt * 2;
         }
         }
     }
 
     if (-CELL_SIZE >= position.x)
     {
-        position.x = CELL_SIZE * MAP_WIDTH - TANK_SPEED*dt;
+        position.x = CELL_SIZE * MAP_WIDTH - TANK_SPEED * dt;
     }
     else if (CELL_SIZE * MAP_WIDTH <= position.x)
     {
-        position.x = TANK_SPEED*dt - CELL_SIZE;
+        position.x = TANK_SPEED * dt - CELL_SIZE;
     }
+
+
     std::cerr << position.x << "----" << position.y << "\n";
 }
 
 
 Position Tank::get_position()
 {
-	return position;
+    return position;
 }
 
 Bullet Tank::get_bullet()
 {
+
+
+
+    bullet.direction = direction;
+    bullet.active = 1;
+    bullet.position = position;
+
     return bullet;
 }
 

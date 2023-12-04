@@ -12,11 +12,12 @@ private:
 
 	bool stop;
 
-	Bullet bullet;
+
 
 public:
+	Bullet bullet;
 	Tank();
-	
+
 	bool get_stop();
 	bool get_dead();
 	Bullet get_bullet();
