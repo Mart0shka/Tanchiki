@@ -27,7 +27,7 @@ public:
 	void set_stop(bool i_stop);
 	void set_dead(bool dead);
 	void set_position(short x, short y);
-	void update(std::array<std::array<Cell, MAP_HEIGHT>, MAP_WIDTH>& map);
+	void update(std::array<std::array<Cell, MAP_HEIGHT>, MAP_WIDTH>& map, float dt);
 	void launch();
 
 	Position get_position();

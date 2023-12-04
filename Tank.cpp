@@ -67,13 +67,13 @@ void Tank::set_position(short i_x, short i_y)
 }
 
 
-void Tank::update(std::array<std::array<Cell, MAP_HEIGHT>, MAP_WIDTH>& i_map)
+void Tank::update(std::array<std::array<Cell, MAP_HEIGHT>, MAP_WIDTH>& i_map, float dt)
 {
     std::array<bool, 4> walls{};
-    walls[0] = map_collision(TANK_SPEED + position.x, position.y, i_map);
-    walls[1] = map_collision(position.x, position.y - TANK_SPEED, i_map);
-    walls[2] = map_collision(position.x - TANK_SPEED, position.y, i_map);
-    walls[3] = map_collision(position.x, TANK_SPEED + position.y, i_map);
+    walls[0] = map_collision(TANK_SPEED*dt + position.x, position.y, i_map);
+    walls[1] = map_collision(position.x, position.y - TANK_SPEED*dt, i_map);
+    walls[2] = map_collision(position.x - TANK_SPEED*dt, position.y, i_map);
+    walls[3] = map_collision(position.x, TANK_SPEED*dt + position.y, i_map);
 
     if (1 == sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
     {
@@ -118,36 +118,36 @@ void Tank::update(std::array<std::array<Cell, MAP_HEIGHT>, MAP_WIDTH>& i_map)
         {
         case 0:
         {
-            position.x += TANK_SPEED;
+            position.x += TANK_SPEED * dt*2;
 
             break;
         }
         case 1:
         {
-            position.y -= TANK_SPEED;
+            position.y -= TANK_SPEED * dt;
 
             break;
         }
         case 2:
         {
-            position.x -= TANK_SPEED;
+            position.x -= TANK_SPEED * dt;
 
             break;
         }
         case 3:
         {
-            position.y += TANK_SPEED;
+            position.y += TANK_SPEED * dt*2;
         }
         }
     }
 
     if (-CELL_SIZE >= position.x)
     {
-        position.x = CELL_SIZE * MAP_WIDTH - TANK_SPEED;
+        position.x = CELL_SIZE * MAP_WIDTH - TANK_SPEED*dt;
     }
     else if (CELL_SIZE * MAP_WIDTH <= position.x)
     {
-        position.x = TANK_SPEED - CELL_SIZE;
+        position.x = TANK_SPEED*dt - CELL_SIZE;
     }
     std::cerr << position.x << "----" << position.y << "\n";
 }

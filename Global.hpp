@@ -6,7 +6,6 @@ constexpr unsigned char CELL_SIZE = 16;
 
 constexpr unsigned char FONT_HEIGHT = 16;
 
-constexpr unsigned char GHOST_SPEED = 1;
 constexpr unsigned char MAP_HEIGHT = 21;
 constexpr unsigned char MAP_WIDTH = 21;
 
