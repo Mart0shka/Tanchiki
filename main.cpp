@@ -14,6 +14,8 @@
 
 int main()
 {
+	float shoot_delay = 30;
+	
 	bool can_launch = true;
 
 	sf::Clock clock;
@@ -84,8 +86,6 @@ int main()
 
 	map = convert_sketch(map_sketch, tank);
 
-	//Get the current time and store it in a variable.
-
 	sf::Time dt = clock.restart();
 	float reload = 0;
 	while (window.isOpen()) {
@@ -109,24 +109,27 @@ int main()
 			}
 			}
 		}
-
-
-		if (1 == sf::Keyboard::isKeyPressed(sf::Keyboard::BackSpace) and can_launch) {
+	
+		if (shoot_delay>=30 and 1 == sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
 			tank.launch();
-			reload = 0;
-			can_launch = false;
-		}
-		reload += dtAsMSec/1000;
-		if (reload > 2000000) {
-			can_launch = true;
+			shoot_delay = 0;
 		}
 
 		window.clear();
 		draw_map(map, window);
+
 		tank.update(map, dtAsMSec);
 		tank.draw(window);
-		tank.bullet.update(map, dtAsMSec);
-		tank.bullet.draw(window);
+		if (!tank.bullets.empty()) {
+			for (int i = 0; i < tank.bullets.size(); ++i) {
+				tank.bullets[i]->update(map, dtAsMSec); //суммируемс€ dt, и если какое-то большое, то прибовл€ем
+				tank.bullets[i]->draw(window);
+			}
+		}
+		shoot_delay += dtAsMSec;
+		
+
+		tank.kill_non_active_bullet();
 
 		window.display();
 	}

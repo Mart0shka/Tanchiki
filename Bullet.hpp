@@ -12,6 +12,7 @@ public:
 	sf::Time time;
 
 	Bullet();
+	Bullet(bool act, unsigned char dir, short x, short y);
 
 	bool get_active();
 

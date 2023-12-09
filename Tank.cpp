@@ -12,7 +12,8 @@ Tank::Tank() :
     dead(0),
     direction(0),
     position({ 0,0 }),
-    stop(1){}
+    stop(1),
+    bullets({}) {}
 
 bool Tank::get_dead() {
     return dead;
@@ -75,11 +76,6 @@ void Tank::update(std::array<std::array<Cell, MAP_HEIGHT>, MAP_WIDTH>& i_map, fl
     walls[2] = map_collision(position.x - TANK_SPEED * dt, position.y, i_map);
     walls[3] = map_collision(position.x, TANK_SPEED * dt + position.y, i_map);
 
-    if (1 == sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
-
-        get_bullet();
-
-    }
 
     if (1 == sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
     {
@@ -166,20 +162,23 @@ Position Tank::get_position()
     return position;
 }
 
-Bullet Tank::get_bullet()
+
+Bullet* Tank::get_bullet(int i)
 {
-
-
-
-    bullet.direction = direction;
-    bullet.active = 1;
-    bullet.position = position;
-
-    return bullet;
+    return bullets[i];
 }
 
 void Tank::launch() {
-    bullet.set_direction(direction);
-    bullet.set_active(true);
-    bullet.set_position(position.x, position.y);
+    auto temp_bullet = new Bullet { true, direction, position.x, position.y };
+    bullets.push_back(temp_bullet);
+}
+
+void Tank::kill_non_active_bullet() {
+    for (short i = 0; i < bullets.size(); ++i) {
+        if (bullets[i]->active == false) {
+            Bullet* temp = bullets[i];
+            bullets.erase(bullets.begin() + i);
+            delete temp;
+        }
+    }
 }

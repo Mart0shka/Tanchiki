@@ -10,8 +10,14 @@
 
 Bullet::Bullet() :
     active(false),
-    direction(4),
+    direction(0),
     position({ 0,0 }) {}
+
+Bullet::Bullet(bool act, unsigned char dir, short x, short y) :
+    active(act),
+    direction(dir),
+    position({ x,y }) {}
+
 
 
 bool Bullet::get_active() {
@@ -25,6 +31,8 @@ unsigned char Bullet::get_direction() {
 void Bullet::set_direction(unsigned char tank_direction) {
     direction = tank_direction;
 }
+
+
 
 void Bullet::draw(sf::RenderWindow& window) {
     sf::Sprite sprite;

@@ -8,8 +8,7 @@ bool map_collision(short i_x, short i_y, std::array<std::array<Cell, MAP_HEIGHT>
 {
 	bool output = 0;
 
-	//Getting the exact position.
-	float cell_x = i_x / static_cast<float>(CELL_SIZE);
+		float cell_x = i_x / static_cast<float>(CELL_SIZE);
 	float cell_y = i_y / static_cast<float>(CELL_SIZE);
 
 	//A Tank can intersect 4 cells at most.
