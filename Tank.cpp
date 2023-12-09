@@ -10,7 +10,7 @@
 
 Tank::Tank() :
     dead(0),
-    direction(0),
+    direction(1),
     position({ 0,0 }),
     stop(1),
     bullets({}) {}

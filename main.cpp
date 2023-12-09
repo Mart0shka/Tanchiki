@@ -6,6 +6,7 @@
 #include<vector>
 
 #include "Global.hpp"
+#include <SFML/Audio.hpp>
 #include "ConvertSketch.hpp"
 #include "Tank.hpp"
 #include "DrawMap.hpp"
@@ -14,7 +15,17 @@
 
 int main()
 {
+	sf::SoundBuffer buffer;
+	bool is_menu = true;
 	float shoot_delay = 30;
+	buffer.loadFromFile("laser_blast.mp3");// тут загружаем в буфер что то
+
+	sf::Sound blast_sound;
+	blast_sound.setBuffer(buffer);
+
+	sf::Music music;
+	music.openFromFile("SHaman_-_YA_Russkijj_74784393.mp3");
+	music.play();
 	
 	bool can_launch = true;
 
@@ -112,6 +123,7 @@ int main()
 	
 		if (shoot_delay>=30 and 1 == sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
 			tank.launch();
+			blast_sound.play();
 			shoot_delay = 0;
 		}
 
